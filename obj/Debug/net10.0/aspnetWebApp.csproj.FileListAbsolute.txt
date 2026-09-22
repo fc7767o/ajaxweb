@@ -288,4 +288,5 @@ C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net
 C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\aspnetWebApp.pdb
 C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\aspnetWebApp.genruntimeconfig.cache
 C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\ref\aspnetWebApp.dll
-C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\compressed\2v9ug8irji-{0}-p3j2hm5b0n-p3j2hm5b0n.gz
+C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\aspnetWebApp.sourcelink.json
+C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\compressed\2v9ug8irji-{0}-tob8j2quvg-tob8j2quvg.gz

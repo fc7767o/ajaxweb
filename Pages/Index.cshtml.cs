@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -14,9 +15,9 @@ public class IndexModel : PageModel
     [BindProperty]
     public string Speciality { get; set; }
     [BindProperty]
-    public string lenguage { get; set; }
+    public string Lenguage { get; set; }
     [BindProperty]
-    public string lernform { get; set; }
+    public string Lernform { get; set; }
     [BindProperty]
     public string Course { get; set; }
     [BindProperty]
@@ -38,20 +39,34 @@ public class IndexModel : PageModel
             ? string.Join(", ", Technologies)
             : "Не выбраны";
 
-        string message = $"Анкета студента\n\n" +
-                $"Имя: {Name}\n" + 
-                $"Телефон: {Phone}\n" +
-                $"Email: {Email}\n" +
-                $"Специальность: {Speciality}\n" +
-                $"Курс: {Course}\n" +
-                $"Город: {Sity}\n" +
-                $"Дата рождения: {BirthDate}\n" +
-                $"Технологии: {technologies}\n" +
-                $"Основной язык: {lenguage}\n" +
-                $"Форма обучения: {lernform}\n" +
-                $"Информация о вас: {Info}\n";
+        // string message = $"Анкета студента\n\n" +
+        //         $"Имя: {Name}\n" + 
+        //         $"Телефон: {Phone}\n" +
+        //         $"Email: {Email}\n" +
+        //         $"Специальность: {Speciality}\n" +
+        //         $"Курс: {Course}\n" +
+        //         $"Город: {Sity}\n" +
+        //         $"Дата рождения: {BirthDate}\n" +
+        //         $"Технологии: {technologies}\n" +
+        //         $"Основной язык: {lenguage}\n" +
+        //         $"Форма обучения: {lernform}\n" +
+        //         $"Информация о вас: {Info}\n";
+        var student = new {
+            Name,
+            Phone,
+            Email,
+            Speciality,
+            Lenguage,
+            Lernform,
+            Course,
+            Info,
+            Sity,
+            BirthDate,
+            Technologies
+        };
 
-                return Content(message);
+        return Content(JsonSerializer.Serialize(student), "application/json");
+
     }
 
     
