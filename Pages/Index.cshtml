@@ -92,11 +92,11 @@
                 <label for="python">Python</label>
                 <br>
                 <input type="checkbox" name="Technologies" value="C++" id="c++">
-                <label for="python">C++</label>
+                <label for="c++">C++</label>
             </div>
         </div>
 
-    <div class="form-group">
+        <div class="form-group">
             <label>Основной язык:</label>
 
             <div class="lenguage">
@@ -143,15 +143,19 @@
             <div>
                 <textarea name="info" id="info"></textarea>
             </div>
-             
-        </div> 
-       
-        
+
+        </div>
+
+
         <button class="form-button" type="submit">
             Отправить
         </button>
 
+        <button class="clear-button" type="reset">
+            Очистить
+        </button>
     </form>
+    <div id="status" class="status"></div>
 
     <div id="result" class="student-card">
         <div>
@@ -223,38 +227,56 @@
 
 <script>
     const form = document.querySelector("form");
-    form.addEventListener("submit", async function (event){
+    form.addEventListener("submit", async function (event) {
         event.preventDefault();
-        const button = form.querySelector("button");
+        const button = form.querySelector("button[type='submit']");
+        const status = document.querySelector("#status");
         const formData = new FormData(form);
         button.disabled = true;
         button.textContent = "Отправка...";
-        const response = await fetch("", {
-            method: "POST",
-            body: formData
-        });
 
-        const data = await response.json();
-        await new Promise(resolve => setTimeout(resolve, 1600));
+        try {
+            const response = await fetch("", {
+                method: "POST",
+                body: formData
+            });
+            if (!response.ok) {
+                throw new Error('Ошибка сервера');
+            }
 
-        document.querySelector("#result-name").textContent = data.Name
-        document.querySelector("#result-phone").textContent = data.Phone
-        document.querySelector("#result-email").textContent = data.Email
-        document.querySelector("#result-speciality").textContent = data.Speciality
-        document.querySelector("#result-lenguage").textContent = data.Lenguage
-        document.querySelector("#result-lernform").textContent = data.Lernform
-        document.querySelector("#result-course").textContent = data.Course
-        document.querySelector("#result-info").textContent = data.Info
-        document.querySelector("#result-sity").textContent = data.Sity
-        document.querySelector("#result-birthDate").textContent = data.BirthDate
-        document.querySelector("#result-technologies").textContent = data.Technologies
+            const data = await response.json();
+            await new Promise(resolve => setTimeout(resolve, 1600));
 
-        console.log(data);
-        document.querySelector("#result").style.display = "block";
-        button.disabled = false;
-        button.textContent = "Анкета отправлена (●'◡'●)"
+            document.querySelector("#result-name").textContent = data.Name
+            document.querySelector("#result-phone").textContent = data.Phone
+            document.querySelector("#result-email").textContent = data.Email
+            document.querySelector("#result-speciality").textContent = data.Speciality
+            document.querySelector("#result-lenguage").textContent = data.Lenguage
+            document.querySelector("#result-lernform").textContent = data.Lernform
+            document.querySelector("#result-course").textContent = data.Course
+            document.querySelector("#result-info").textContent = data.Info
+            document.querySelector("#result-sity").textContent = data.Sity
+            document.querySelector("#result-birthDate").textContent = data.BirthDate
+            document.querySelector("#result-technologies").textContent = data.Technologies
 
-    })
+            console.log(data);
+            document.querySelector("#result").style.display = "block";
+            button.disabled = false;
+            button.textContent = "Анкета отправлена (●'◡'●)"
+        }
+
+        catch (error) {
+            status.textContent = "Не удалось отправить анкету";
+        } finally {
+            button.disabled = false;
+            button.textContent = "Отправить";
+        }
+    });
+
+
+    form.addEventListener("reset", function () {
+        document.querySelector("#result").style.display = 'none';
+        document.querySelector("#status").textContent = "";
+    });
+
 </script>
-
-
