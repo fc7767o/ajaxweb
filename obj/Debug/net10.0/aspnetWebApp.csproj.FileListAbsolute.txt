@@ -276,8 +276,6 @@ C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net
 C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\compressed\n5jl80c5lo-{0}-muycvpuwrr-muycvpuwrr.gz
 C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\compressed\youeaqtlmv-{0}-87fc7y1x7t-87fc7y1x7t.gz
 C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\compressed\crqfgm9f1a-{0}-mlv21k5csn-mlv21k5csn.gz
-C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\compressed\ya761pcgnd-{0}-rwfqbo55br-rwfqbo55br.gz
-C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\compressed\icsgclpo1u-{0}-rwfqbo55br-rwfqbo55br.gz
 C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\staticwebassets.build.json
 C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\staticwebassets.build.json.cache
 C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\staticwebassets.development.json
@@ -289,4 +287,6 @@ C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net
 C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\aspnetWebApp.genruntimeconfig.cache
 C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\ref\aspnetWebApp.dll
 C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\aspnetWebApp.sourcelink.json
-C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\compressed\2v9ug8irji-{0}-nn6iohw67b-nn6iohw67b.gz
+C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\compressed\ya761pcgnd-{0}-110ele6a2i-110ele6a2i.gz
+C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\compressed\icsgclpo1u-{0}-110ele6a2i-110ele6a2i.gz
+C:\Users\106010102\Downloads\drive-download-20260915T054134Z-1-001\obj\Debug\net10.0\compressed\2v9ug8irji-{0}-n8akeqtsb6-n8akeqtsb6.gz

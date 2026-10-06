@@ -54,7 +54,7 @@ public class IndexModel : PageModel
         //         $"Форма обучения: {lernform}\n" +
         //         $"Информация о вас: {Info}\n";
         var student = new Student {
-            Id = Students.Count + 1,
+            Id = Students.Any() ? Students.Max(x => x.Id) + 1 : 1,
             Name = Name,
             Phone = Phone,
             Email = Email,
@@ -78,8 +78,12 @@ public class IndexModel : PageModel
 
     }
 
-    public IActionResult OnPostDelete(int Id){
-            var student = Students.FirstOrDefault(x => x.Id == Id);
+    public IActionResult OnGetStudents(){
+        return new JsonResult(Students);
+    }
+
+    public IActionResult OnPostDelete(int id){
+            var student = Students.FirstOrDefault(x => x.Id == id);
             if(student == null){
                 return new JsonResult(new {
                     success = false,

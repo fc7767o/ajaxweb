@@ -17,6 +17,7 @@
     </p>
 
     <form method="post">
+        @Html.AntiForgeryToken()
 
         <div class="form-group">
             <label>Имя-фамилия:</label>
@@ -222,15 +223,25 @@
         </div>
     }
 
+<div class="students-section">
+    <h2>Список студентов</h2>
+    <div id="students-list"></div>
 </div>
+
+</div>
+
+
 
 
 <script>
     const form = document.querySelector("form");
+    const button = form.querySelector("button[type='submit']");
+    const status = document.querySelector("#status");
+    const studentsList = document.querySelector("#students-list")
+
     form.addEventListener("submit", async function (event) {
         event.preventDefault();
-        const button = form.querySelector("button[type='submit']");
-        const status = document.querySelector("#status");
+
         const formData = new FormData(form);
         button.disabled = true;
         button.textContent = "Отправка...";
@@ -247,17 +258,17 @@
             const data = await response.json();
             await new Promise(resolve => setTimeout(resolve, 1600));
 
-            document.querySelector("#result-name").textContent = data.Name
-            document.querySelector("#result-phone").textContent = data.Phone
-            document.querySelector("#result-email").textContent = data.Email
-            document.querySelector("#result-speciality").textContent = data.Speciality
-            document.querySelector("#result-lenguage").textContent = data.Lenguage
-            document.querySelector("#result-lernform").textContent = data.Lernform
-            document.querySelector("#result-course").textContent = data.Course
-            document.querySelector("#result-info").textContent = data.Info
-            document.querySelector("#result-sity").textContent = data.Sity
-            document.querySelector("#result-birthDate").textContent = data.BirthDate
-            document.querySelector("#result-technologies").textContent = data.Technologies
+            document.querySelector("#result-name").textContent = data.name
+            document.querySelector("#result-phone").textContent = data.phone
+            document.querySelector("#result-email").textContent = data.email
+            document.querySelector("#result-speciality").textContent = data.speciality
+            document.querySelector("#result-lenguage").textContent = data.lastTimeenguage
+            document.querySelector("#result-lernform").textContent = data.lernform
+            document.querySelector("#result-course").textContent = data.course
+            document.querySelector("#result-info").textContent = data.info
+            document.querySelector("#result-sity").textContent = data.sity
+            document.querySelector("#result-birthDate").textContent = data.birthDate
+            document.querySelector("#result-technologies").textContent = data.technologies
 
             console.log(data);
             document.querySelector("#result").style.display = "block";
@@ -273,10 +284,210 @@
         }
     });
 
+    async function loadStudent(){
+        try{
+            const response = await fetch("?handler=Students")
+
+            if(!response.ok){
+                throw new Error("Ошибка загрузки студентов")
+
+            };
+            const students = await response.json()
+            studentsList.innerHTML = "";
+            students.forEach(student =>{
+                const card = document.createElement("div")
+                card.className= "student-card";
+                card.innerHTML = `
+                    <div class="student-card-header">
+                        <div>
+                            <h2>
+                                ${student.name}
+                            </h2>
+                            <p>
+                                ${student.speciality}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="student-info">
+                        <div class="info-item">
+                            <span>
+                                Телефон: 
+                            </span>
+                            <strong>
+                                ${student.phone}
+                            </strong>
+                        </div>
+                        <div class="info-item">
+                            <span>
+                                Email: 
+                            </span>
+                            <strong>
+                                ${student.email}
+                            </strong>
+                        </div>
+                        <div class="info-item">
+                            <span>
+                                Курс: 
+                            </span>
+                            <strong>
+                                ${student.course}
+                            </strong>
+                        </div>
+                        <div class="info-item">
+                            <span>
+                                Дата рождения: 
+                            </span>
+                            <strong>
+                                ${student.birthDate}
+                            </strong>
+                        </div>
+                        <div class="info-item">
+                            <span>
+                                Технологии: 
+                            </span>
+                            <strong>
+                                ${student.technologies.join(", ")}
+                            </strong>
+                        </div>
+                    </div>
+                    <button 
+                        class="delete-button" 
+                        onclick="deleteStudent(${student.id})">
+                        Удалить
+                    </button>
+                    `;
+                studentsList.appendChild(card);
+                
+            })
+        }
+        catch(error){
+            console.error(error);
+            studentsList.innerHTML = `<div class="result> </div>`
+        }
+    }
+
+    async function deleteStudent(){
+            try{
+                const token = document.querySelector('input[name="__RequestVerificationToken"]').valie;
+                const response = await fetch("?handler=Delete&id=" +id,{
+                    method: "POST",
+                    headers:{
+                        "RequestVerificationToken":token
+                    }
+                });
+                if(!response.ok){
+                    throw new Error("Ошибка")
+                }
+                const result = await response.json();
+                if(result.success){
+                    status.textContent = "Анкета удалена"
+                    await loadStudents();
+                }
+            } catch{
+                console.error(error);
+                status.textContent = "Не удалось";
+
+            }
+    }
 
     form.addEventListener("reset", function () {
         document.querySelector("#result").style.display = 'none';
         document.querySelector("#status").textContent = "";
     });
+
+// ===== Розовые звёздочки за курсором =====
+(function () {
+    let lastTime = 0;
+    const minInterval = 15;
+
+    // Нежно-розовая палитра (без малинового)
+    const colors = [
+        '#ff508b', // pink
+        '#ffb6c1', // light pink
+        '#ffc5d2ff', // very light pink
+        '#ff9ec4', // soft rose
+        '#ff9fc5ff', // pale pink
+        '#ffd2dfff', // очень светлый розовый
+        '#ffcadbff'  // белый блик
+    ];
+
+    // Маленькие размеры (в px)
+    const sizes = [8, 10, 12, 14, 16];
+
+    // Символы-звёздочки
+    const symbols = ['✦', '✧', '⋆', '✩'];
+
+    function createSparkle(x, y) {
+        const sparkle = document.createElement('span');
+        sparkle.className = 'sparkle';
+
+        const size = sizes[Math.floor(Math.random() * sizes.length)];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+
+        // Лёгкий разлёт
+        const dx = (Math.random() - 0.5) * 70;
+        const dy = (Math.random() - 0.5) * 70 - 15;
+        const rot = (Math.random() - 0.5) * 180 + 'deg';
+
+        sparkle.textContent = symbol;
+        sparkle.style.left = x + 'px';
+        sparkle.style.top = y + 'px';
+        sparkle.style.fontSize = size + 'px';
+        sparkle.style.color = color;
+        sparkle.style.setProperty('--dx', dx + 'px');
+        sparkle.style.setProperty('--dy', dy + 'px');
+        sparkle.style.setProperty('--rot', rot);
+
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => sparkle.remove(), 1100);
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        const now = performance.now();
+        if (now - lastTime < minInterval) return;
+        lastTime = now;
+
+        // 1–2 звёздочки за раз
+        const count = Math.random() > 0.6 ? 2 : 1;
+        for (let i = 0; i < count; i++) {
+            const offsetX = (Math.random() - 0.5) * 12;
+            const offsetY = (Math.random() - 0.5) * 12;
+            createSparkle(e.clientX + offsetX, e.clientY + offsetY);
+        }
+    });
+})();
+
+// ===== Блестки внутри шапки =====
+(function () {
+    const layer = document.getElementById('glitterLayer');
+    if (!layer) return;
+
+    const symbols = ['✦', '✧', '⋆', '✩', '·'];
+    const colors  = ['#ffffff', '#ffe4ec', '#ffc0cb', '#ff9ec4'];
+
+    function spawnSparkle() {
+        const s = document.createElement('span');
+        s.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        s.style.left = Math.random() * 100 + '%';
+        s.style.top  = Math.random() * 100 + '%';
+        s.style.fontSize = (6 + Math.random() * 10) + 'px';
+        s.style.color = colors[Math.floor(Math.random() * colors.length)];
+        s.style.animationDuration = (2 + Math.random() * 2.5) + 's';
+        s.style.animationDelay = (Math.random() * 3) + 's';
+
+        layer.appendChild(s);
+
+        // Удаляем через 6 секунд, чтобы не копились
+        setTimeout(() => s.remove(), 6000);
+    }
+
+    // Начальная россыпь
+    for (let i = 0; i < 18; i++) spawnSparkle();
+
+    // Постоянно добавляем новые
+    setInterval(spawnSparkle, 400);
+})();
 
 </script>
